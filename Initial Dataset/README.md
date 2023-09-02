@@ -7,7 +7,7 @@
 'FinalDataset1.csv' - The dataset contains the same information as the FinalDataset.csv, but all rows with null values were removed.
 
 *	1662 reviews (rows)
-*	
+  
 *	This dataset is used for further sentiment analysis
 
 URL.csv - The dataset contains all the URLs for doctors on RateMDs, used for review scraping.
