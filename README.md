@@ -20,31 +20,31 @@ Doctors can be disciplined for criminal convictions, medical negligence, wrongly
 
 _1.1 Dataset & Data Pre- Processing:_
 
-●	We Compiled a list of fraudulent doctors in Illinois and Michigan state with the reasons for their sanction, considering doctors with speciality as general physicians from “ProPublica”.
+* We Compiled a list of fraudulent doctors in Illinois and Michigan state with the reasons for their sanction, considering doctors with speciality as general physicians from “ProPublica”.
 
-●	Further considered only those doctors who can be tracked by ID on RateMds.
+* Further considered only those doctors who can be tracked by ID on RateMds.
 
-●	Obtained doctor's ratings and every single review of each patient from RateMds.
+* Obtained doctor's ratings and every single review of each patient from RateMds.
 
-●	Removed null values, then using VADER computed sentiment scores, and divided the texts into positive and negative buckets using compound scores.
+* Removed null values, then used VADER computed sentiment scores, and divided the texts into positive and negative buckets using compound scores.
 
-●	Concatenated all the positive reviews for one doctor together and negative reviews together, and performed the same for all doctors.
+* Concatenated all the positive reviews for one doctor together and negative reviews together, and performed the same for all doctors.
 
-●	Finally, we have 202 doctors and 8 features including state, specialty, gender, reviews text, and name after removing duplicate rows and performing text pre-processing on reviews.
+* Finally, we have 202 doctors and 8 features including state, specialty, gender, review text, and name after removing duplicate rows and performing text pre-processing on reviews.
 
 _1.2 Text Pre-Processing & Topic Modelling:_
 
-●	We performed text pre-processing on reviews like removing stop words like ‘is’, ‘the’,’ and’, tokenized text into tokens(words), removing special characters, and lemmatization which is the process of grouping together different inflected forms of the same word.
+* We performed text pre-processing on reviews like removing stop words like ‘is’, ‘the’,’ and’, tokenized text into tokens(words), removing special characters, and lemmatization which is the process of grouping together different inflected forms of the same word.
 
-●	Furthermore, we also removed unwanted doctor names present in the text of the reviews, and we got a clean reviews text, which is used ahead for topic modeling using Corex and Zero-Shot Classification.
+* Furthermore, we also removed unwanted doctor names present in the text of the reviews, and we got a clean review text, which is used ahead for topic modeling using Corex and Zero-Shot Classification.
 
-●	We computed 7 topic Corex scores of negative reviews and positive reviews, topics include Bedside Manners, Communication, Knowledge, Office Environment, Scheduling, Wait Times, Cost, and Insurance.
+* We computed 7 topic Corex scores of negative reviews and positive reviews, topics include Bedside Manners, Communication, Knowledge, Office Environment, Scheduling, Wait Times, Cost, and Insurance.
 
-●	Similarly using zero-shot classification we computed 5 topic scores for sanctioned texts of doctors which include Improper treatment, Unprofessional Immoral conduct, failure to pay income taxes, CME Continuing Medical Education, and Patient Harm.
+* Similarly using zero-shot classification we computed 5 topic scores for sanctioned texts of doctors which include Improper treatment, Unprofessional Immoral conduct, failure to pay income taxes, CME Continuing Medical Education, and Patient Harm.
 
 _1.3 Linear Regression:_
 
-● Linear regression was performed to determine the impact of various attributes on the overall rating. The analysis showed that communication and scheduling had a significant effect on overall rating, while the impact of sanctions was not significant.
+* Linear regression was performed to determine the impact of various attributes on the overall rating. The analysis showed that communication and scheduling had a significant effect on overall rating, while the impact of sanctions was not significant.
 
 
 ### **Results**
