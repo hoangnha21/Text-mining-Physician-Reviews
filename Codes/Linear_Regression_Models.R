@@ -1,0 +1,321 @@
+data=read.csv("~/R/final_df.csv")
+str(data)
+data$Gender<- ifelse(trimws(data$Gender) == "Female", 1, 0)
+overall<-subset(data, select = c("n_score_bed_side","n_score_Knowledge",
+                                "n_score_communication","n_score_environment",
+                                "n_score_scheduling","n_score_wait_time",
+                                "n_score_costs","p_score_bed_side",
+                                "p_score_Knowledge","p_score_communication",
+                                "p_score_environment","p_score_scheduling",
+                                "p_score_wait_time","p_score_costs",
+                                "Overall_Rating"))
+overall_model = lm(overall$Overall_Rating~., data = overall)
+summary(overall_model)
+confint(overall_model)
+par(mfrow=(c(2,2)))
+plot(overall_model)
+# Calculate R-squared
+r_squaredoverall <- summary(overall_model)$r.squared
+r_squaredoverall
+# Calculate mean squared error (MSE)
+mseoverall <- mean((predict(overall_model) - data$Overall_Rating)^2)
+mseoverall
+# Calculate root mean squared error (RMSE)
+rmseoverall <- sqrt(mseoverall)
+rmseoverall
+# Calculate mean absolute error (MAE)
+maeoverall <- mean(abs(predict(overall_model) - data$Overall_Rating))
+maeoverall
+# Print the evaluation metrics
+cat("R-squared: ", r_squaredoverall, "\n")
+cat("MSE: ", mseoverall, "\n")
+cat("RMSE: ", rmseoverall, "\n")
+cat("MAE: ", maeoverall, "\n")
+
+
+#ihgkg
+data$avg_count_pos_rev <- data$No_of_Positive_Reviews / data$Total_Reviews
+data$avg_count_neg_rev <- data$No_of_Negative_Reviews / data$Total_Reviews
+data$avg_count_pos_rev[is.na(data$avg_count_pos_rev)] <- 0
+data$avg_count_neg_rev[is.na(data$avg_count_neg_rev)] <- 0
+str(data)
+
+data1<-subset(data, select = c("avg_count_pos_rev","avg_count_neg_rev","avg_neg_score"
+                          ,"avg_pos_score","Overall_Rating","Gender"))
+data1_model = lm(data1$Overall_Rating~., data = data1)
+summary(data1_model)
+confint(data1_model)
+par(mfrow=(c(2,2)))
+plot(data1_model)
+# Calculate R-squared
+r_squareddata1 <- summary(data1_model)$r.squared
+r_squareddata1
+# Calculate mean squared error (MSE)
+msedata1 <- mean((predict(data1_model) - data$Overall_Rating)^2)
+msedata1
+# Calculate root mean squared error (RMSE)
+rmsedata1 <- sqrt(mseoverall)
+rmsedata1
+# Calculate mean absolute error (MAE)
+maedata1<- mean(abs(predict(data1_model) - data$Overall_Rating))
+maedata1
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddata1, "\n")
+cat("MSE: ", msedata1, "\n")
+cat("RMSE: ", rmsedata1, "\n")
+cat("MAE: ", maedata1, "\n")
+
+
+#negdata
+data_neg<-subset(data, select = c("n_score_bed_side","n_score_Knowledge",
+                                  "n_score_communication","n_score_environment",
+                                  "n_score_scheduling","n_score_wait_time",
+                                  "n_score_costs","Overall_Rating",
+                                  "No_of_Negative_Reviews","Gender"))
+data_neg_model = lm(data_neg$Overall_Rating~., data = data_neg)
+summary(data_neg_model)
+confint(data_neg_model)
+par(mfrow=(c(2,2)))
+plot(data_neg_model)
+
+# Calculate R-squared
+r_squareddataneg <- summary(data_neg_model)$r.squared
+r_squareddataneg
+# Calculate mean squared error (MSE)
+msedataneg <- mean((predict(data_neg_model) - data$Overall_Rating)^2)
+msedataneg
+# Calculate root mean squared error (RMSE)
+rmsedataneg <- sqrt(mseoverall)
+rmsedataneg
+# Calculate mean absolute error (MAE)
+maedataneg<- mean(abs(predict(data_neg_model) - data$Overall_Rating))
+maedataneg
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddataneg, "\n")
+cat("MSE: ", msedataneg, "\n")
+cat("RMSE: ", rmsedataneg, "\n")
+cat("MAE: ", maedataneg, "\n")
+
+
+#posdata
+data_pos<-subset(data, select = c("p_score_bed_side","p_score_Knowledge",
+                                  "p_score_communication","p_score_environment",
+                                  "p_score_scheduling","p_score_wait_time",
+                                  "p_score_costs","Overall_Rating",
+                                  "No_of_Positive_Reviews","Gender"))
+data_pos_model = lm(data_pos$Overall_Rating~., data = data_pos)
+summary(data_pos_model)
+confint(data_pos_model)
+par(mfrow=(c(2,2)))
+plot(data_pos_model)
+
+# Calculate R-squared
+r_squareddatapos <- summary(data_pos_model)$r.squared
+r_squareddatapos
+# Calculate mean squared error (MSE)
+msedatapos <- mean((predict(data_pos_model) - data$Overall_Rating)^2)
+msedatapos
+# Calculate root mean squared error (RMSE)
+rmsedatapos <- sqrt(mseoverall)
+rmsedatapos
+# Calculate mean absolute error (MAE)
+maedatapos<- mean(abs(predict(data_pos_model) - data$Overall_Rating))
+maedatapos
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddatapos, "\n")
+cat("MSE: ", msedatapos, "\n")
+cat("RMSE: ", rmsedatapos, "\n")
+cat("MAE: ", maedatapos, "\n")
+
+
+all<-subset(data, select = c("Gender","n_score_bed_side","n_score_Knowledge",
+                             "n_score_communication","n_score_environment",
+                             "n_score_scheduling","n_score_wait_time",
+                             "n_score_costs","p_score_bed_side",
+                             "p_score_Knowledge","p_score_communication",
+                             "p_score_environment","p_score_scheduling",
+                             "p_score_wait_time","p_score_costs",
+                             "Overall_Rating","CME.Continuing.medical.Education",
+                             "Improper.Treatment.Prescription",
+                             "Patient.Harm","Unprofessional.Immoral.Contact",
+                             "Financial.Irregularities"))
+all_model = lm(all$Overall_Rating~., data = all)
+summary(all_model)
+confint(all_model)
+par(mfrow=(c(2,2)))
+plot(all_model)
+# Calculate R-squared
+r_squaredall <- summary(all_model)$r.squared
+r_squaredall
+# Calculate mean squared error (MSE)
+mseall <- mean((predict(all_model) - data$Overall_Rating)^2)
+mseall
+# Calculate root mean squared error (RMSE)
+rmseall <- sqrt(mseall)
+rmseall
+# Calculate mean absolute error (MAE)
+maeall <- mean(abs(predict(all_model) - data$Overall_Rating))
+maeall
+# Print the evaluation metrics
+cat("R-squared: ", r_squaredall, "\n")
+cat("MSE: ", mseall, "\n")
+cat("RMSE: ", rmseall, "\n")
+cat("MAE: ", maeall, "\n")
+
+#
+df<-subset(data, select = c("Gender","n_score_bed_side","n_score_Knowledge",
+                            "n_score_communication","n_score_environment",
+                            "n_score_scheduling","n_score_wait_time",
+                            "n_score_costs",
+                            "Overall_Rating","CME.Continuing.medical.Education",
+                            "Improper.Treatment.Prescription",
+                            "Patient.Harm","Unprofessional.Immoral.Contact",
+                            "Financial.Irregularities"))
+df_model = lm(df$Overall_Rating~., data = df)
+summary(df_model)
+confint(df_model)
+par(mfrow=(c(2,2)))
+plot(df_model)
+# Calculate R-squared
+r_squareddf <- summary(df_model)$r.squared
+r_squareddf
+# Calculate mean squared error (MSE)
+msedf <- mean((predict(df_model) - data$Overall_Rating)^2)
+msedf
+# Calculate root mean squared error (RMSE)
+rmsedf <- sqrt(msedf)
+rmsedf
+# Calculate mean absolute error (MAE)
+maedf <- mean(abs(predict(df_model) - data$Overall_Rating))
+maedf
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddf, "\n")
+cat("MSE: ", msedf, "\n")
+cat("RMSE: ", rmsedf, "\n")
+cat("MAE: ", maedf, "\n")
+
+#pos
+
+df1<-subset(data, select = c("Gender","p_score_bed_side","p_score_Knowledge",
+                            "p_score_communication","p_score_environment",
+                            "p_score_scheduling","p_score_wait_time",
+                            "p_score_costs",
+                            "Overall_Rating","CME.Continuing.medical.Education",
+                            "Improper.Treatment.Prescription",
+                            "Patient.Harm","Unprofessional.Immoral.Contact",
+                            "Financial.Irregularities"))
+df1_model = lm(df1$Overall_Rating~., data = df1)
+summary(df1_model)
+confint(df1_model)
+par(mfrow=(c(2,2)))
+plot(df1_model)
+# Calculate R-squared
+r_squareddf1 <- summary(df1_model)$r.squared
+r_squareddf1
+# Calculate mean squared error (MSE)
+msedf1 <- mean((predict(df1_model) - data$Overall_Rating)^2)
+msedf1
+# Calculate root mean squared error (RMSE)
+rmsedf1 <- sqrt(msedf1)
+rmsedf1
+# Calculate mean absolute error (MAE)
+maedf1 <- mean(abs(predict(df1_model) - data$Overall_Rating))
+maedf1
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddf, "\n")
+cat("MSE: ", msedf1, "\n")
+cat("RMSE: ", rmsedf1, "\n")
+cat("MAE: ", maedf1, "\n")
+#sanc
+df2<-subset(data, select = c(
+                             "Overall_Rating","CME.Continuing.medical.Education",
+                             "Improper.Treatment.Prescription",
+                             "Patient.Harm","Unprofessional.Immoral.Contact",
+                             "Financial.Irregularities"))
+df2_model = lm(df2$Overall_Rating~., data = df2)
+summary(df2_model)
+confint(df2_model)
+par(mfrow=(c(2,2)))
+plot(df2_model)
+# Calculate R-squared
+r_squareddf2 <- summary(df2_model)$r.squared
+r_squareddf2
+# Calculate mean squared error (MSE)
+msedf2 <- mean((predict(df2_model) - data$Overall_Rating)^2)
+msedf2
+# Calculate root mean squared error (RMSE)
+rmsedf2 <- sqrt(msedf2)
+rmsedf2
+# Calculate mean absolute error (MAE)
+maedf2 <- mean(abs(predict(df2_model) - data$Overall_Rating))
+maedf2
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddf2, "\n")
+cat("MSE: ", msedf2, "\n")
+cat("RMSE: ", rmsedf2, "\n")
+cat("MAE: ", maedf2, "\n")
+
+df3<-subset(data, select = c("p_score_communication","n_score_communication",
+                             "p_score_environment","n_score_scheduling",
+                             "p_score_scheduling","avg_count_pos_rev",
+                             "avg_count_neg_rev","Gender","Overall_Rating"))
+df3_model = lm(df3$Overall_Rating~., data = df3)
+summary(df3_model)
+confint(df3_model)
+par(mfrow=(c(2,2)))
+plot(df3_model)
+# Calculate R-squared
+r_squareddf3 <- summary(df3_model)$r.squared
+r_squareddf3
+# Calculate mean squared error (MSE)
+msedf3 <- mean((predict(df3_model) - data$Overall_Rating)^2)
+msedf3
+# Calculate root mean squared error (RMSE)
+rmsedf3 <- sqrt(msedf3)
+rmsedf3
+# Calculate mean absolute error (MAE)
+maedf3 <- mean(abs(predict(df3_model) - data$Overall_Rating))
+maedf3
+# Print the evaluation metrics
+cat("R-squared: ", r_squareddf3, "\n")
+cat("MSE: ", msedf3, "\n")
+cat("RMSE: ", rmsedf3, "\n")
+cat("MAE: ", maedf3, "\n")
+
+full<-subset(data, select = c("n_score_bed_side","n_score_Knowledge",
+                              "n_score_communication","n_score_environment",
+                              "n_score_scheduling","n_score_wait_time",
+                              "n_score_costs","p_score_bed_side",
+                              "p_score_Knowledge","p_score_communication",
+                              "p_score_environment","p_score_scheduling",
+                              "p_score_wait_time","p_score_costs",
+                              "Overall_Rating"
+                              ,"avg_neg_score"
+                              ,"avg_pos_score",
+                              "CME.Continuing.medical.Education",
+                              "Improper.Treatment.Prescription",
+                              "Patient.Harm","Unprofessional.Immoral.Contact",
+                              "Financial.Irregularities"))
+full_model = lm(full$Overall_Rating~., data = full)
+summary(full_model)
+confint(full_model)
+par(mfrow=(c(2,2)))
+plot(full_model)
+# Calculate R-squared
+r_squaredfull <- summary(full_model)$r.squared
+r_squaredfull
+# Calculate mean squared error (MSE)
+msefull <- mean((predict(full_model) - data$Overall_Rating)^2)
+msefull
+# Calculate root mean squared error (RMSE)
+rmsefull <- sqrt(msefull)
+rmsefull
+# Calculate mean absolute error (MAE)
+maefull <- mean(abs(predict(full_model) - data$Overall_Rating))
+maefull
+# Print the evaluation metrics
+cat("R-squared: ", r_squaredfull, "\n")
+cat("MSE: ", msefull, "\n")
+cat("RMSE: ", rmsefull, "\n")
+cat("MAE: ", maefull, "\n")
+
